@@ -32,11 +32,13 @@ public class StayHydrated {
                     System.out.println("Name: ");
                     String name = sc.nextLine();
                     System.out.println("Height(cm): ");
-                    Double height = Double.parseDouble(sc.nextLine());
+                    Double height = sc.nextDouble();
                     System.out.println("Weight(kg): ");
-                    Double weight = Double.parseDouble(sc.nextLine());
+                    Double weight = sc.nextDouble();
                     
                     // todo: save user profile info
+                    User newUser = new User(name, height, weight);
+                    newUser.printInfo();
                     break;
                 case "n":
                     terminate = true;
