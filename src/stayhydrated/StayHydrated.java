@@ -25,29 +25,20 @@ public class StayHydrated {
         
         // todo: lowercase and check the first character
         boolean terminate = false;
-        // print users
-        users.getAllUsers();
-        System.out.println(users.numOfUsers);
+        // print users 
+
         while(users.numOfUsers == 0 || ! terminate){
             System.out.println("Please create a profile (y)es or (n)o:" );
             Scanner sc = new Scanner(System.in);
             String answer = sc.nextLine();
             switch(answer){
                 case "y":
-                    System.out.println("Name: ");
-                    String name = sc.nextLine();
-                    System.out.println("Height(cm): ");
-                    Double height = sc.nextDouble();
-                    System.out.println("Weight(kg): ");
-                    Double weight = sc.nextDouble();
-                    
-                    
-                    User newUser = new User(name, height, weight);
-                    System.out.println(newUser.deets);
+                    User newUser = new User();
+                    System.out.println(newUser.data);
                     newUser.printInfo();
                     
                     // todo: save user profile info
-                    users.addUser(newUser.deets);
+                    users.addUser(newUser.data);
                     System.out.println(users.numOfUsers);
                     terminate = true;
                     break;

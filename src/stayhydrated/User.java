@@ -8,6 +8,7 @@ package stayhydrated;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  *
@@ -17,22 +18,27 @@ public class User {
     protected String name;
     protected double height, weight, intakeGoal;
     private final Date createdAt;
-    public HashMap deets;
+    public HashMap data;
     
-    public User(String NAME, double HEIGHT, double WEIGHT){
-        this.name = NAME;
-        this.height = HEIGHT;
-        this.weight = WEIGHT;
+    public User(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Name: ");
+        this.name = sc.nextLine();
+        
+        System.out.println("Height(cm): ");
+        this.height = sc.nextDouble();
+        
+        System.out.println("Weight(kg): ");
+        this.weight = sc.nextDouble();
+                    
         this.calcIntakeGoal();
         this.createdAt = new Date();
-        
-        HashMap userObj = new HashMap();
-        userObj.put("name", this.name);
-        userObj.put("height", this.height);
-        userObj.put("intakeGoal", this.intakeGoal);
-        userObj.put("createAt", this.createdAt);
-        
-        this.deets = userObj;
+
+        this.data = new HashMap();
+        this.data.put("name", this.name);
+        this.data.put("height", this.height);
+        this.data.put("intakeGoal", this.intakeGoal);
+        this.data.put("createAt", this.createdAt);
     };
    
  
