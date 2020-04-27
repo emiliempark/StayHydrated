@@ -17,13 +17,18 @@ public class StayHydrated {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("Hello, no profile found" );
+        
+        UserPool users = new UserPool();
+        
+        System.out.println("Let's Stay Hydrated!");
+       
         
         // todo: lowercase and check the first character
         boolean terminate = false;
-        
-        while(!terminate){
+        // print users
+        users.getAllUsers();
+        System.out.println(users.numOfUsers);
+        while(users.numOfUsers == 0 || ! terminate){
             System.out.println("Please create a profile (y)es or (n)o:" );
             Scanner sc = new Scanner(System.in);
             String answer = sc.nextLine();
@@ -36,9 +41,15 @@ public class StayHydrated {
                     System.out.println("Weight(kg): ");
                     Double weight = sc.nextDouble();
                     
-                    // todo: save user profile info
+                    
                     User newUser = new User(name, height, weight);
+                    System.out.println(newUser.deets);
                     newUser.printInfo();
+                    
+                    // todo: save user profile info
+                    users.addUser(newUser.deets);
+                    System.out.println(users.numOfUsers);
+                    terminate = true;
                     break;
                 case "n":
                     terminate = true;
@@ -49,6 +60,7 @@ public class StayHydrated {
             }
         }
         
+        users.getAllUsers();
     }
     
 }

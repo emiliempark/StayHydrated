@@ -7,15 +7,17 @@ package stayhydrated;
 
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  *
  * @author emilie
  */
 public class User {
-    public String name;
-    public double height, weight, intakeGoal;
+    protected String name;
+    protected double height, weight, intakeGoal;
     private final Date createdAt;
+    public HashMap deets;
     
     public User(String NAME, double HEIGHT, double WEIGHT){
         this.name = NAME;
@@ -23,8 +25,17 @@ public class User {
         this.weight = WEIGHT;
         this.calcIntakeGoal();
         this.createdAt = new Date();
+        
+        HashMap userObj = new HashMap();
+        userObj.put("name", this.name);
+        userObj.put("height", this.height);
+        userObj.put("intakeGoal", this.intakeGoal);
+        userObj.put("createAt", this.createdAt);
+        
+        this.deets = userObj;
     };
-    
+   
+ 
     private void calcIntakeGoal(){
         double min = this.weight * 0.03 ;   
         double max = (this.height + this.weight) / 100;
