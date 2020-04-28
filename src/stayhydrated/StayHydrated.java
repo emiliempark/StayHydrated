@@ -30,7 +30,7 @@ public class StayHydrated {
             //instanciate new user
             User newUser = new User();
             app.users.add(newUser);
-            app.printInfo();
+            System.out.println(app.users.size());
         } 
         
     }

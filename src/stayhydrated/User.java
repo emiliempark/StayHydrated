@@ -59,7 +59,7 @@ public class User {
         System.out.printf("Hi %s,%n"
                 + "You're %scm tall, %skg light.%n"
                 + "Stay hydrated by drinking %s litre(s) of liquid every day.%n",
-                this.name, df.format(this.height), df.format(this.weight), df.format(this.goal));
+                this.name, df.format(this.height), df.format(this.weight), df.format(this.goal.amount));
     }
     
 }
