@@ -25,9 +25,13 @@ public class User {
     Map<Date,List> dailyIntakes;
     
     public User(){
-        System.out.println("Please create a profile (y)es or (n)o:" );
+        
+        //loop the process to re-initiate in a case of user enter invalid input
+        
+        System.out.println("Create a profile (y)es or (n)o:" );
         Scanner sc = new Scanner(System.in);
-        String anser = sc.nextLine();
+        String anser = sc.nextLine().substring(0, 1).toLowerCase();
+        
         
         switch(anser){
             case "y":
@@ -45,7 +49,10 @@ public class User {
                 this.printInfo();
 
                 break;
+            case "n":
+                break;
             default:
+                System.out.println("INVALID INPUT");
                 break;
             
         }

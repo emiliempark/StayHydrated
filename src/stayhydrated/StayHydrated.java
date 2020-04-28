@@ -22,16 +22,24 @@ public class StayHydrated {
         App app = new App();
         System.out.println("Let's Stay Hydrated!");
        
-        
-        // todo: lowercase and check the first character
-        boolean terminate = false;
-        // print users 
         if(app.users.size() == 0){
             //instanciate new user
             User newUser = new User();
             app.users.add(newUser);
             System.out.println(app.users.size());
-        } 
+        } else{
+            // print options or user to choose
+            // 1) existing users
+            // 2) create a new user
+            
+            // 3) ask user 
+            // System.out.println("Are you going to create a profile (y)es or (n)o:" );
+            // yes - create a new user, 
+            // User newUser = new User();
+            // app.users.add(newUser);
+            // System.out.println(app.users.size());
+            // no- terminate, exception - invalid value;
+        }
         
     }
     
