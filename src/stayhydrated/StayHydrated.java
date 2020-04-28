@@ -5,6 +5,7 @@
  */
 package stayhydrated;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,40 +19,20 @@ public class StayHydrated {
      */
     public static void main(String[] args) {
         
-        UserPool users = new UserPool();
-        
+        App app = new App();
         System.out.println("Let's Stay Hydrated!");
        
         
         // todo: lowercase and check the first character
         boolean terminate = false;
         // print users 
-
-        while(users.numOfUsers == 0 || ! terminate){
-            System.out.println("Please create a profile (y)es or (n)o:" );
-            Scanner sc = new Scanner(System.in);
-            String answer = sc.nextLine();
-            switch(answer){
-                case "y":
-                    User newUser = new User();
-                    System.out.println(newUser.data);
-                    newUser.printInfo();
-                    
-                    // todo: save user profile info
-                    users.addUser(newUser.data);
-                    System.out.println(users.numOfUsers);
-                    terminate = true;
-                    break;
-                case "n":
-                    terminate = true;
-                    break;
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
+        if(app.users.size() == 0){
+            //instanciate new user
+            User newUser = new User();
+            app.users.add(newUser);
+            app.printInfo();
+        } 
         
-        users.getAllUsers();
     }
     
 }

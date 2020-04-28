@@ -8,6 +8,8 @@ package stayhydrated;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -15,40 +17,41 @@ import java.util.Scanner;
  * @author emilie
  */
 public class User {
-    protected String name;
-    protected double height, weight, intakeGoal;
-    private final Date createdAt;
-    public HashMap data;
+    private String name;
+    private double height, weight;
+    private Goal goal;
+    private final Date createdAt = new Date();
+    List<Intake> intakes;
+    Map<Date,List> dailyIntakes;
     
     public User(){
+        System.out.println("Please create a profile (y)es or (n)o:" );
         Scanner sc = new Scanner(System.in);
-        System.out.println("Name: ");
-        this.name = sc.nextLine();
+        String anser = sc.nextLine();
         
-        System.out.println("Height(cm): ");
-        this.height = sc.nextDouble();
-        
-        System.out.println("Weight(kg): ");
-        this.weight = sc.nextDouble();
-                    
-        this.calcIntakeGoal();
-        this.createdAt = new Date();
+        switch(anser){
+            case "y":
+                System.out.println("Name: ");
+                this.name = sc.nextLine();
 
-        this.data = new HashMap();
-        this.data.put("name", this.name);
-        this.data.put("height", this.height);
-        this.data.put("intakeGoal", this.intakeGoal);
-        this.data.put("createAt", this.createdAt);
+                System.out.println("Height(cm): ");
+                this.height = sc.nextDouble();
+
+                System.out.println("Weight(kg): ");
+                this.weight = sc.nextDouble();
+
+                this.goal = new Goal(this.height, this.weight);
+                
+                this.printInfo();
+
+                break;
+            default:
+                break;
+            
+        }
+        
     };
    
- 
-    private void calcIntakeGoal(){
-        double min = this.weight * 0.03 ;   
-        double max = (this.height + this.weight) / 100;
-        double average = (min + max) / 2;
-
-        this.intakeGoal = (double)Math.round(average * 100) /100; // why I need to cast? 
-    };
     
     public void printInfo(){
         // remove trailing zeros 
@@ -56,7 +59,7 @@ public class User {
         System.out.printf("Hi %s,%n"
                 + "You're %scm tall, %skg light.%n"
                 + "Stay hydrated by drinking %s litre(s) of liquid every day.%n",
-                this.name, df.format(this.height), df.format(this.weight), df.format(this.intakeGoal));
+                this.name, df.format(this.height), df.format(this.weight), df.format(this.goal));
     }
     
 }
