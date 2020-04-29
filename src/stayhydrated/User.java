@@ -5,6 +5,7 @@
  */
 package stayhydrated;
 
+import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,40 +24,37 @@ public class User {
     private final Date createdAt = new Date();
     List<Intake> intakes;
     Map<Date,List> dailyIntakes;
+    private int intakeProgressPercentage;
+    private int healthRate; // 5stars?
+    
+    // static polymorphism
+    
+    public User(String NAME, double HEIGHT, double WEIGHT){
+        this.name = NAME;
+        this.height= HEIGHT;
+        this.weight = WEIGHT;
+        this.goal = new Goal(this.height, this.weight);
+    }
     
     public User(){
         
         //loop the process to re-initiate in a case of user enter invalid input
         
-        System.out.println("Create a profile (y)es or (n)o:" );
+        System.out.println("Create a new user" );
         Scanner sc = new Scanner(System.in);
-        String anser = sc.nextLine().substring(0, 1).toLowerCase();
         
-        
-        switch(anser){
-            case "y":
-                System.out.println("Name: ");
-                this.name = sc.nextLine();
+        System.out.println("Name: ");
+        this.name = sc.nextLine();
 
-                System.out.println("Height(cm): ");
-                this.height = sc.nextDouble();
+        System.out.println("Height(cm): ");
+        this.height = sc.nextDouble();
 
-                System.out.println("Weight(kg): ");
-                this.weight = sc.nextDouble();
+        System.out.println("Weight(kg): ");
+        this.weight = sc.nextDouble();
 
-                this.goal = new Goal(this.height, this.weight);
-                
-                this.printInfo();
+        this.goal = new Goal(this.height, this.weight);
 
-                break;
-            case "n":
-                break;
-            default:
-                System.out.println("INVALID INPUT");
-                break;
-            
-        }
-        
+        this.printInfo();
     };
    
     
@@ -67,6 +65,15 @@ public class User {
                 + "You're %scm tall, %skg light.%n"
                 + "Stay hydrated by drinking %s litre(s) of liquid every day.%n",
                 this.name, df.format(this.height), df.format(this.weight), df.format(this.goal.amount));
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+ 
+    @Override
+    public String toString(){ // return type: String
+        return this.getName();
     }
     
 }

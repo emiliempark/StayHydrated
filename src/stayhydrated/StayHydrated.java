@@ -5,6 +5,7 @@
  */
 package stayhydrated;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,27 +21,26 @@ public class StayHydrated {
     public static void main(String[] args) {
         
         App app = new App();
+        User activeUser;
         System.out.println("Let's Stay Hydrated!");
-       
-        if(app.users.size() == 0){
+        
+        //create dummy users
+        app.addUser("Jelly Beany", 170, 52.5);
+        app.addUser("Tofu", 180, 80);
+        
+        if(app.isUserEmpty()){
             //instanciate new user
-            User newUser = new User();
-            app.users.add(newUser);
-            System.out.println(app.users.size());
-        } else{
-            // print options or user to choose
-            // 1) existing users
-            // 2) create a new user
-            
-            // 3) ask user 
-            // System.out.println("Are you going to create a profile (y)es or (n)o:" );
-            // yes - create a new user, 
-            // User newUser = new User();
-            // app.users.add(newUser);
-            // System.out.println(app.users.size());
-            // no- terminate, exception - invalid value;
+            app.addUser();   
         }
         
+        app.selectUser();
+        activeUser = app.activeUser();
+        System.out.println("selected User "+ activeUser);
+        
+        
+            // The End
+            System.out.println("See ya!");
     }
     
 }
+
