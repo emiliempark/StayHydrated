@@ -5,13 +5,13 @@
  */
 package stayhydrated;
 
-import java.lang.reflect.Field;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -22,12 +22,11 @@ public class User {
     private double height, weight;
     private Goal goal;
     private final Date createdAt = new Date();
-    List<Intake> intakes;
+    List<Intake> intakes = new ArrayList<>();
     Map<Date,List> dailyIntakes;
-    private int intakeProgressPercentage;
+    private double intakeProgressPercentage;
     private int healthRate; // 5stars?
     
-    // static polymorphism
     
     public User(String NAME, double HEIGHT, double WEIGHT){
         this.name = NAME;
@@ -64,13 +63,37 @@ public class User {
         System.out.printf("Hi %s,%n"
                 + "You're %scm tall, %skg light.%n"
                 + "Stay hydrated by drinking %s litre(s) of liquid every day.%n",
-                this.name, df.format(this.height), df.format(this.weight), df.format(this.goal.amount));
+                this.name, df.format(this.height), df.format(this.weight), df.format(this.goal.average));
     }
     
     public String getName(){
         return this.name;
     }
- 
+    
+//    public List<Intake> getDailyIntakeRecord(){
+//        System.out.println(this.intakes);
+//       
+//        return this.intakes.stream().filter((intake) -> intake.createdAt == new Date()).collect(Collectors.toList());
+//    }
+    
+    public int getIntakeProgress(){
+
+        int totalAmount = 0;
+        double goalInML = this.goal.average * 1000;
+        System.out.println("list "+  Intake.class.isArray());
+        for (int i = 0; i < this.intakes.size(); i++){
+            totalAmount += this.intakes.get(i).amount;
+        }
+        
+        double calc = totalAmount / goalInML  * 100.0;
+
+        return (int) Math.round(calc);
+    }
+
+    public void addIntake(Intake INTAKE_RECORD){
+        this.intakes.add(INTAKE_RECORD);
+    }
+    
     @Override
     public String toString(){ // return type: String
         return this.getName();

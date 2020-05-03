@@ -10,14 +10,14 @@ package stayhydrated;
  * @author emilie
  */
 public class Goal {
-    double amount;
+    public double min;
+    public double max;
+    public double average;
 
     
     public Goal(double HEIGHT, double WEIGHT){
-        double min = WEIGHT * 0.03 ;   
-        double max = (HEIGHT + WEIGHT) / 100;
-        double average = (double)Math.round((min + max) / 2 * 100) / 100;  
-        
-        this.amount = average;
+        this.min = WEIGHT * 0.03 ;   
+        this.max = (HEIGHT + WEIGHT) / 100;
+        this.average = (double)Math.round((min + max) / 2 * 100) / 100;  
     }
 }
