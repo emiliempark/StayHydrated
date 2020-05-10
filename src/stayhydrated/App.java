@@ -74,8 +74,8 @@ public class App {
     public void addUser(){
         users.add(new User());
     }
-    public void addUser(String NAME, double HEIGHT, double WEIGHT){
-        users.add(new User(NAME, HEIGHT, WEIGHT));
+    public void addUser(String NAME, double HEIGHT, double WEIGHT, String DATE){
+        users.add(new User(NAME, HEIGHT, WEIGHT, DATE));
     } 
     public void printInfo(){
         System.out.println(users);

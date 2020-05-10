@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import static stayhydrated.StayHydrated.appProps;
+import static stayhydrated.StayHydrated.sdf;
 
 /**
  *
@@ -22,18 +23,19 @@ public class User {
     private String name;
     private double height, weight;
     private Goal goal;
-    private final Date createdAt = new Date();
+    private String createdAt;
     List<Intake> intakes = new ArrayList<>();
     private double intakeProgressPercentage;
     private int healthRate; // 5stars?
     
     
     
-    public User(String NAME, double HEIGHT, double WEIGHT){
+    public User(String NAME, double HEIGHT, double WEIGHT, String DATE){
         this.name = NAME;
         this.height= HEIGHT;
         this.weight = WEIGHT;
         this.goal = new Goal(this.height, this.weight);
+        this.createdAt = DATE;
         
     }
     
@@ -55,16 +57,16 @@ public class User {
 
         this.goal = new Goal(this.height, this.weight);
         
+        this.createdAt = sdf.format(new Date());
+        
         this.saveUserToStorage();
         this.printInfo();
     };
    
     public void saveUserToStorage(){
-        // write user to storage
-
         try {
             FileWriter storageWriter = new FileWriter(appProps.getProperty("storagePath"), true);
-            storageWriter.write(this.name + "|" + this.height +"|"+ this.weight + "\n" );
+            storageWriter.write(this.name + "," + this.height +","+ this.weight + ","+ sdf.format(new Date())+ "\n" );
             storageWriter.close();
             System.out.println("Successfully saved to the storage");
         } catch (IOException e) {

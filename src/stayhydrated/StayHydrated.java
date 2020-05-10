@@ -5,11 +5,14 @@
  */
 package stayhydrated;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
@@ -23,26 +26,24 @@ import java.util.logging.Logger;
 public class StayHydrated {
     protected static String appConfigPath;
     protected static Properties appProps = new Properties();
-
+    protected static SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd");;
     
     public static void main(String[] args) throws FileNotFoundException, IOException {
      
     appConfigPath = "app.properties";
     try {
         appProps.load(new FileInputStream(appConfigPath));
-    } catch (FileNotFoundException ex) {
-        Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
-        Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (FileNotFoundException e) {
+        Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, e);
+    } catch (IOException e) {
+        Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, e);
     }
 
        
         App app = new App();
         Date today = new Date();
         User activeUser;
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         System.out.println("Let's Stay Hydrated!" + sdf.format(today));
         
         try {
@@ -57,8 +58,24 @@ public class StayHydrated {
         }
         
         //create dummy users or read user from store
-        app.addUser("Jelly Beany", 170, 52.5);
-        app.addUser("Tofu", 180, 80);
+//        app.addUser("Jelly Beany", 170, 52.5);
+//        app.addUser("Tofu", 180, 80);
+     
+        BufferedReader reader;
+        try{
+            reader = new BufferedReader(new FileReader(appProps.getProperty("storagePath")));
+            String line = reader.readLine();
+            while(line != null){
+                String[] userDeets = line.split(",");
+                app.addUser(userDeets[0], Double.parseDouble(userDeets[1]), Double.parseDouble(userDeets[2]), userDeets[3]);
+                //read next line
+                line = reader.readLine();
+            }
+            
+            reader.close();
+        }catch(IOException e){
+            System.out.println("Oops! Something went wrong" + e);
+        }
         
         if(app.isUserEmpty()){
             //instanciate new user
@@ -107,6 +124,10 @@ public class StayHydrated {
      
             // The End
             System.out.println("See ya!");
+    }
+
+    private static String Pattern(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public StayHydrated() {
