@@ -21,7 +21,7 @@ public abstract class Liquid {
        JUICE("Juice"), 
        FIZZYDRINK("Fizzy Drink");
        
-       private String name;
+       private final String name;
        
        Types (String NAME){
            this.name = NAME;

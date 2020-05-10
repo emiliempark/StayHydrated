@@ -19,6 +19,8 @@ public class FizzyDrink extends Liquid{
 
     @Override
     public void printInfo() {
+        // print
+        // fizzy drink is carbonated and contains too much sugar
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

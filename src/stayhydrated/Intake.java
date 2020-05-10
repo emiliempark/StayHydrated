@@ -63,6 +63,7 @@ public class Intake {
         return this.type+" "+this.amount+"ml "+this.createdAt;
     }
     
+    // to write file
     public Map toMap(){
         Map map = new HashMap();
         map.put("type", this.type);

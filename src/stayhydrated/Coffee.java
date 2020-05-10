@@ -13,12 +13,14 @@ public class Coffee extends Liquid{
 
     public Coffee(short AMOUNT) {
         super(Types.COFFEE, 3);
-        this.hydratePercentage = 70;
+        this.hydratePercentage = 85;
         this.enteredAmount = AMOUNT;
     }
 
     @Override
     public void printInfo() {
+        // print 
+        // coffee is caffeinated beverage
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
