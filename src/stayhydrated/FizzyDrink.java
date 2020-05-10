@@ -10,13 +10,11 @@ package stayhydrated;
  * @author emilie
  */
 public class FizzyDrink extends Liquid{
-    
-    public FizzyDrink(){
-        super("Fizzy Drink", 1);
-    }
-    @Override
-    public void acceptedAmount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    public FizzyDrink(short AMOUNT){
+        super(Types.FIZZYDRINK, 1);
+        this.hydratePercentage = 70;
+        this.enteredAmount = AMOUNT;
     }
 
     @Override

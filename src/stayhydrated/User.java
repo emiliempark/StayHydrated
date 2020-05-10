@@ -9,7 +9,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,6 @@ public class User {
     private Goal goal;
     private final Date createdAt = new Date();
     List<Intake> intakes = new ArrayList<>();
-    Map<Date,List> dailyIntakes;
     private double intakeProgressPercentage;
     private int healthRate; // 5stars?
     
@@ -70,17 +68,14 @@ public class User {
         return this.name;
     }
     
-//    public List<Intake> getDailyIntakeRecord(){
-//        System.out.println(this.intakes);
-//       
-//        return this.intakes.stream().filter((intake) -> intake.createdAt == new Date()).collect(Collectors.toList());
-//    }
+    public List<Intake> getDailyIntakeRecord(){
+        return this.intakes;
+    }
     
     public int getIntakeProgress(){
 
         int totalAmount = 0;
         double goalInML = this.goal.average * 1000;
-        System.out.println("list "+  Intake.class.isArray());
         for (int i = 0; i < this.intakes.size(); i++){
             totalAmount += this.intakes.get(i).amount;
         }
@@ -91,7 +86,18 @@ public class User {
     }
 
     public void addIntake(Intake INTAKE_RECORD){
-        this.intakes.add(INTAKE_RECORD);
+        boolean isAdded = false;
+        try{
+            this.intakes.add(INTAKE_RECORD);
+            isAdded = true;
+        } catch(Exception e) {
+            throw e;
+        }
+        if(isAdded){
+            System.out.println("Good Job! New intake record added!");
+            System.out.println("More things to do?");
+        }
+        
     }
     
     @Override

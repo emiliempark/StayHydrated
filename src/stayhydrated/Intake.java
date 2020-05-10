@@ -5,27 +5,57 @@
  */
 package stayhydrated;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import stayhydrated.Liquid.Types;
 
 /**
  *
  * @author emilie
  */
+
 public class Intake {
     public final Date createdAt = new Date(); // dataforamt 
-    ToL type;
+    String type;
 
     int amount; // ml
     
-    
-    public Intake(ToL TYPE, int AMOUNT){
-        System.out.println("test" + TYPE);
-        this.type = TYPE;
-        this.amount = AMOUNT;
+    /**
+     *
+     * @param TYPE
+     * @param AMOUNT
+     */
+    public Intake(Types TYPE, short AMOUNT){
+
+        this.type = TYPE.toString();
+        
+        // hash map or array of properties?
+        Liquid selectedLiquid = null;
+        switch(TYPE){
+            case WATER: 
+                selectedLiquid = new Water(AMOUNT);
+                break;
+            case COFFEE:
+                selectedLiquid = new Coffee(AMOUNT);
+                break;
+            case TEA:
+                selectedLiquid = new Tea(AMOUNT);
+                break;
+            case JUICE:
+                selectedLiquid = new Juice(AMOUNT);
+                break;
+            case FIZZYDRINK:
+                selectedLiquid = new FizzyDrink(AMOUNT);
+                break;
+            default: 
+                System.out.println("INVALID LIQUID TYPE");
+        }
+        
+        if(selectedLiquid != null){
+            this.amount = selectedLiquid.acceptedAmount();
+
+        }
     }
 
     @Override

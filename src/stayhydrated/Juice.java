@@ -9,15 +9,15 @@ package stayhydrated;
  *
  * @author emilie
  */
-public class Juice extends Liquid{
-    public Juice(){
-        super("Juice", 2);
-    }
-    @Override
-    public void acceptedAmount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+public final class Juice extends Liquid{
+    
+    public Juice(short AMOUNT){
+        super(Types.JUICE, 2);
+        this.hydratePercentage = 70;
+        this.enteredAmount = AMOUNT;
 
+    }
+    
     @Override
     public void printInfo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

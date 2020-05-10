@@ -10,16 +10,43 @@ package stayhydrated;
  * @author emilie
  */
 public abstract class Liquid {
-   public String type = "";
+   public Types type;
    public int hydratePercentage;
    public int rate;
+   public short enteredAmount;
+   public enum Types { 
+       WATER("Water"), 
+       COFFEE("Coffee"), 
+       TEA("Tea"), 
+       JUICE("Juice"), 
+       FIZZYDRINK("Fizzy Drink");
+       
+       private String name;
+       
+       Types (String NAME){
+           this.name = NAME;
+       }
+       
+       
+       @Override
+       public String toString(){
+           return this.name;
+       }
+       
+   }
    
-   public Liquid(String TYPE_NAME, int RATE){
+   public Liquid(Types TYPE_NAME, int RATE){
        this.type = TYPE_NAME;
        this.rate = RATE;
    }
    
-   public abstract void acceptedAmount();
+    /**
+     *
+     * @return the amount user input * hydrate percentage
+     */
+    public short acceptedAmount(){
+     return (short) (this.enteredAmount * (this.hydratePercentage / 100.0));    
+    };
    
    public abstract void printInfo();
     

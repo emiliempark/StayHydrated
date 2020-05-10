@@ -10,13 +10,11 @@ package stayhydrated;
  * @author emilie
  */
 public class Coffee extends Liquid{
-    public Coffee(){
-        super("Coffee", 3);
-    }
 
-    @Override
-    public void acceptedAmount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Coffee(short AMOUNT) {
+        super(Types.COFFEE, 3);
+        this.hydratePercentage = 70;
+        this.enteredAmount = AMOUNT;
     }
 
     @Override
