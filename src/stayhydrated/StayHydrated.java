@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
@@ -57,10 +56,7 @@ public class StayHydrated {
             System.out.println("Oops! Something went wrong" + e);
         }
         
-        //create dummy users or read user from store
-//        app.addUser("Jelly Beany", 170, 52.5);
-//        app.addUser("Tofu", 180, 80);
-     
+        // read users from storage.txt
         BufferedReader reader;
         try{
             reader = new BufferedReader(new FileReader(appProps.getProperty("storagePath")));
@@ -81,49 +77,52 @@ public class StayHydrated {
             //instanciate new user
             app.addUser();   
         }
-        
-        app.selectUser();
-        activeUser = app.activeUser();
-        
-        
-        
-        boolean terminate = false;
-        
-        while(!terminate){
-          System.out.println("1) Add intake \n2) View status \n3) Exit \n");  
-          Scanner sc = new Scanner(System.in);
-            
-            switch(sc.nextLine()){
-                case "1":
-                    System.out.println("Type of drink:");
 
-                    for(int i = 0; i < Liquid.Types.values().length; i++){
-                        System.out.println((1+i) +") "+ Liquid.Types.values()[i]);
-                    }
+        boolean terminateApp = false;
+        
+        while(!terminateApp){
+            app.selectUser();
+            activeUser = app.activeUser();
+            boolean terminateUserActivity = false;
+        
+            while(!terminateUserActivity){
+              System.out.println("1) Add intake \n2) View status \n3) Exit \n");  
+              Scanner sc = new Scanner(System.in);
 
-                    int typeSelect = sc.nextInt() - 1;
+                switch(sc.nextLine()){
+                    case "1":
+                        System.out.println("Type of drink:");
 
-                    System.out.println("How much ml have you taken?");
-                    int amountTaken = sc.nextInt();
+                        for(int i = 0; i < Liquid.Types.values().length; i++){
+                            System.out.println((1+i) +") "+ Liquid.Types.values()[i]);
+                        }
 
-                    activeUser.addIntake(new Intake(Liquid.Types.values()[typeSelect], (short)amountTaken));
-                    break;
-                case "2":
-                    // print percentage of daily intake
-                    System.out.println("list " + activeUser.getDailyIntakeRecord());
-                    System.out.println("Intake progress is " + activeUser.getIntakeProgress() + "%");
-                    break;
-                case "3":
-                    terminate = true;
-                    break;
-                default:
-                    System.out.println("INVALID INPUT");
-            };
+                        int typeSelect = sc.nextInt() - 1;
 
+                        System.out.println("How much ml have you taken?");
+                        int amountTaken = sc.nextInt();
+
+                        activeUser.addIntake(new Intake(Liquid.Types.values()[typeSelect], (short)amountTaken));
+                        break;
+                    case "2":
+                        // print percentage of daily intake
+                        System.out.println("list " + activeUser.getDailyIntakeRecord());
+                        System.out.println("Intake progress is " + activeUser.getIntakeProgress() + "%");
+                        break;
+                    case "3":
+                        terminateUserActivity = true;
+                        break;
+                    default:
+                        System.out.println("INVALID INPUT");
+                };
+
+            }
         }
-     
-            // The End
-            System.out.println("See ya!");
+        
+        // display root menu again
+        app.selectUser();
+        // The End
+        System.out.println("See ya!");
     }
 
     private static String Pattern(String string) {
