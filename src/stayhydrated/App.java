@@ -63,14 +63,17 @@ public class App {
                 terminate = true;
 
             }else if(select == terminateOption){
-                terminate = true;
+                terminate = true; 
+                this.appTerminate();
             }else{
                 System.out.println("INVAILD OPTION SELECTED: Please try again!");
             }
         }   
     }
 
-
+    public void appTerminate(){
+        System.exit(0);
+    }
     public void addUser(){
         users.add(new User());
     }

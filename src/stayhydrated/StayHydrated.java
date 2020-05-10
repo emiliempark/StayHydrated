@@ -114,13 +114,10 @@ public class StayHydrated {
                         break;
                     default:
                         System.out.println("INVALID INPUT");
-                };
-
+                }
             }
         }
         
-        // display root menu again
-        app.selectUser();
         // The End
         System.out.println("See ya!");
     }
