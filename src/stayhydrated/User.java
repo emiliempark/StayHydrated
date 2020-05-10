@@ -5,12 +5,14 @@
  */
 package stayhydrated;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+import static stayhydrated.StayHydrated.appProps;
 
 /**
  *
@@ -26,11 +28,13 @@ public class User {
     private int healthRate; // 5stars?
     
     
+    
     public User(String NAME, double HEIGHT, double WEIGHT){
         this.name = NAME;
         this.height= HEIGHT;
         this.weight = WEIGHT;
         this.goal = new Goal(this.height, this.weight);
+        
     }
     
     public User(){
@@ -50,11 +54,23 @@ public class User {
         this.weight = sc.nextDouble();
 
         this.goal = new Goal(this.height, this.weight);
-
+        
+        this.saveUserToStorage();
         this.printInfo();
     };
    
-    
+    public void saveUserToStorage(){
+        // write user to storage
+
+        try {
+            FileWriter storageWriter = new FileWriter(appProps.getProperty("storagePath"), true);
+            storageWriter.write(this.name + "|" + this.height +"|"+ this.weight + "\n" );
+            storageWriter.close();
+            System.out.println("Successfully saved to the storage");
+        } catch (IOException e) {
+            System.out.println("Oops! Something went wrong" + e);
+        }
+    }
     public void printInfo(){
         // remove trailing zeros 
         DecimalFormat df = new DecimalFormat("###.##");
@@ -69,6 +85,7 @@ public class User {
     }
     
     public List<Intake> getDailyIntakeRecord(){
+        // read file
         return this.intakes;
     }
     

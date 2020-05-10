@@ -6,33 +6,49 @@
 package stayhydrated;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author emilie
  */
 public class StayHydrated {
+    protected static String appConfigPath;
+    protected static Properties appProps = new Properties();
 
-    public static void main(String[] args) {
-        
+    
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+     
+    appConfigPath = "app.properties";
+    try {
+        appProps.load(new FileInputStream(appConfigPath));
+    } catch (FileNotFoundException ex) {
+        Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException ex) {
+        Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+       
         App app = new App();
         Date today = new Date();
         User activeUser;
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         
-        
         System.out.println("Let's Stay Hydrated!" + sdf.format(today));
         
         try {
-            File usersFile = new File("test-filename.txt");
-            if (usersFile.createNewFile()) {
-              System.out.println("File created: " + usersFile.getName());
+            File storage = new File(appProps.getProperty("storagePath"));
+            if (storage.createNewFile()) {
+              System.out.println("File created: " + storage.getName());
             } else {
               System.out.println("File already exists.");
             }
@@ -40,16 +56,7 @@ public class StayHydrated {
             System.out.println("Oops! Something went wrong" + e);
         }
         
-        try {
-            FileWriter usersFileWriter = new FileWriter("test-filename.txt");
-            usersFileWriter.write("I can write to file!!!");
-            usersFileWriter.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("Oops! Something went wrong" + e);
-        }
-
-        //create dummy users
+        //create dummy users or read user from store
         app.addUser("Jelly Beany", 170, 52.5);
         app.addUser("Tofu", 180, 80);
         
@@ -100,6 +107,10 @@ public class StayHydrated {
      
             // The End
             System.out.println("See ya!");
+    }
+
+    public StayHydrated() {
+        this.appConfigPath = "app.properties";
     }
     
 }
