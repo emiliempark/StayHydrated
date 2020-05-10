@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author emilie
+ * @git https://github.com/emiliempark/StayHydrated.git
  */
 public class StayHydrated {
     protected static String appConfigPath;
