@@ -5,10 +5,19 @@
  */
 package stayhydrated;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import static stayhydrated.StayHydrated.frame;
+import static stayhydrated.StayHydrated.panel;
+import static stayhydrated.StayHydrated.sdf;
 
 /**
  *
@@ -37,12 +46,27 @@ public class App {
         return users.get(this.selectedUserIndex);
     }
     public void selectUser(){
+
         boolean terminate = false;
         
         while(!terminate){
-            System.out.println("Hi, What's your name?");
+            JLabel label = new JLabel("Hi, What's your name?");
+            panel.add(label);
             for(int i = 0; i < this.getNumOfUser(); i++ ){
-                System.out.println((i+1) +") "+ this.getUser(i).toString());
+                
+                JButton userButton = new JButton(this.getUser(i).toString());
+                userButton.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Object source = e.getSource();
+                        
+                        System.out.println("test button clicked" + source);
+//                        System.out.println((i+1) +") "+ this.getUser(i).toString());
+                    }
+                });
+                panel.add(userButton);
+                
+                
             }
             int otherOption = this.getNumOfUser() + 1;
             System.out.println(otherOption +") I wanna create a new user");
@@ -68,7 +92,8 @@ public class App {
             }else{
                 System.out.println("INVAILD OPTION SELECTED: Please try again!");
             }
-        }   
+        } 
+        frame.add(panel);
     }
 
     public void appTerminate(){

@@ -5,9 +5,7 @@
  */
 package stayhydrated;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,23 +18,23 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  *
  * @author emilie
  * @git https://github.com/emiliempark/StayHydrated.git
  */
-public class StayHydrated {
+public class StayHydrated extends JFrame {
     
     protected static String appConfigPath;
     protected static Properties appProps = new Properties();
     protected static SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd");;
-
+    protected static JFrame frame;
+    protected static JPanel panel;
     
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        JFrame frame = new JFrame("Stay Hydrated");
+        frame = new JFrame("Stay Hydrated");
         frame.setVisible(true);
         
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -57,11 +55,18 @@ public class StayHydrated {
         }
         
         frame.setSize(windowWidth, windowHeight);
-        frame.setLayout(new FlowLayout());
-        JButton b = new JButton("test");
-        frame.add(b);
- 
+        frame.setLocation(50, 50);
+        frame.setLayout(new BorderLayout());
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ 
+        panel = new JPanel();
+        frame.add(panel, BorderLayout.WEST);
+        
+        JPanel panel2 = new JPanel();
+        
+        frame.add(panel2, BorderLayout.CENTER);
+        panel2.setBackground(Color.pink);
         
         appConfigPath = "app.properties";
         
@@ -80,7 +85,7 @@ public class StayHydrated {
         
         // get the current date time
         System.out.println("Let's Stay Hydrated!" + sdf.format(today));
-        
+
         // create storage.txt file
         try {
             File storage = new File(appProps.getProperty("storagePath"));
