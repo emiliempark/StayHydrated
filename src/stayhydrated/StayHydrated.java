@@ -5,6 +5,9 @@
  */
 package stayhydrated;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +20,8 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 /**
  *
@@ -24,28 +29,59 @@ import java.util.logging.Logger;
  * @git https://github.com/emiliempark/StayHydrated.git
  */
 public class StayHydrated {
+    
     protected static String appConfigPath;
     protected static Properties appProps = new Properties();
     protected static SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd");;
+
     
     public static void main(String[] args) throws FileNotFoundException, IOException {
-     
-    appConfigPath = "app.properties";
-    try {
-        appProps.load(new FileInputStream(appConfigPath));
-    } catch (FileNotFoundException e) {
-        Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, e);
-    } catch (IOException e) {
-        Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, e);
-    }
+        JFrame frame = new JFrame("Stay Hydrated");
+        frame.setVisible(true);
+        
+        Toolkit kit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = kit.getScreenSize();
+
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        
+        int windowWidth = 600;
+        int windowHeight = 400;
+        
+        if(windowWidth > screenWidth){
+            windowWidth = screenWidth;
+        }
+        
+        if(windowHeight > screenHeight){
+            windowHeight = screenHeight;
+        }
+        
+        frame.setSize(windowWidth, windowHeight);
+        frame.setLayout(new FlowLayout());
+        JButton b = new JButton("test");
+        frame.add(b);
+ 
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        appConfigPath = "app.properties";
+        
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+        } catch (FileNotFoundException e) {
+            Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, e);
+        } catch (IOException e) {
+            Logger.getLogger(StayHydrated.class.getName()).log(Level.SEVERE, null, e);
+        }
 
        
         App app = new App();
         Date today = new Date();
         User activeUser;
-
+        
+        // get the current date time
         System.out.println("Let's Stay Hydrated!" + sdf.format(today));
         
+        // create storage.txt file
         try {
             File storage = new File(appProps.getProperty("storagePath"));
             if (storage.createNewFile()) {
@@ -59,7 +95,7 @@ public class StayHydrated {
         
         // read users from storage.txt
         BufferedReader reader;
-        try{
+        try{ 
             reader = new BufferedReader(new FileReader(appProps.getProperty("storagePath")));
             String line = reader.readLine();
             while(line != null){
@@ -75,7 +111,8 @@ public class StayHydrated {
         }
         
         if(app.isUserEmpty()){
-            //instanciate new user
+            // display text field and a button
+            // instanciate new user
             app.addUser();   
         }
 
