@@ -31,12 +31,14 @@ public class StayHydrated extends JFrame {
     protected static Properties appProps = new Properties();
     protected static SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd");;
     protected static JFrame frame;
-    protected static JPanel panel;
+    protected static JPanel pUser;
     
     public static void main(String[] args) throws FileNotFoundException, IOException {
+        // create frame
         frame = new JFrame("Stay Hydrated");
         frame.setVisible(true);
         
+        // set frame size
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
 
@@ -59,14 +61,16 @@ public class StayHydrated extends JFrame {
         frame.setLayout(new BorderLayout());
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-        panel = new JPanel();
-        frame.add(panel, BorderLayout.WEST);
         
-        JPanel panel2 = new JPanel();
+        // set user panel 
+        pUser = new JPanel();
+        frame.add(pUser, BorderLayout.NORTH);
+        pUser.setLayout(new BoxLayout(pUser, BoxLayout.X_AXIS));
         
-        frame.add(panel2, BorderLayout.CENTER);
-        panel2.setBackground(Color.pink);
+        JPanel pContent = new JPanel();
+        
+        frame.add(pContent, BorderLayout.CENTER);
+        pContent.setBackground(Color.pink);
         
         appConfigPath = "app.properties";
         
