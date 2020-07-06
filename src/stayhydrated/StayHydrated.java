@@ -29,7 +29,8 @@ public class StayHydrated extends JFrame {
     
     protected static String appConfigPath;
     protected static Properties appProps = new Properties();
-    protected static SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd");;
+    protected static SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd");
+    protected static String today;
     protected static JFrame frame;
     protected static JPanel pUser;
     
@@ -71,7 +72,8 @@ public class StayHydrated extends JFrame {
         
         frame.add(pContent, BorderLayout.CENTER);
         pContent.setBackground(Color.pink);
-        
+        pContent.setLayout(new BorderLayout());
+ 
         appConfigPath = "app.properties";
         
         try {
@@ -84,11 +86,12 @@ public class StayHydrated extends JFrame {
 
        
         App app = new App();
-        Date today = new Date();
+        today = sdf.format(new Date());
+        
         User activeUser;
         
         // get the current date time
-        System.out.println("Let's Stay Hydrated!" + sdf.format(today));
+        System.out.println("Let's Stay Hydrated!" + today);
 
         // create storage.txt file
         try {
@@ -168,10 +171,5 @@ public class StayHydrated extends JFrame {
         // The End
         System.out.println("See ya!");
     }
-
-    private static String Pattern(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-  
 }
 

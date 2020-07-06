@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.event.*;
 import static java.awt.Component.LEFT_ALIGNMENT;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import static stayhydrated.StayHydrated.frame;
 import static stayhydrated.StayHydrated.pUser;
 
@@ -31,7 +33,6 @@ import static stayhydrated.StayHydrated.pUser;
 public class App {
     private final List<User> users = new ArrayList<>();
     private int selectedUserIndex;
-    
     
     public int getNumOfUser(){
         return users.size();
@@ -57,7 +58,9 @@ public class App {
         JPanel pUserColLeft = new JPanel(new FlowLayout());
         
         pUser.add(pUserColLeft, BorderLayout.LINE_START);
-     
+        
+        
+        
         boolean terminate = false;
         
         while(!terminate){
@@ -90,7 +93,7 @@ public class App {
             addUserBtn.addActionListener(new ActionListener(){
 
                 public void actionPerformed(ActionEvent e) {
-//                    addUserPopup.setVisible(true);
+                    addUser();
                     System.out.println("add user button clicked");             
                 }
             
@@ -124,8 +127,51 @@ public class App {
         System.exit(0);
     }
     public void addUser(){
+        // add dialog form
+        JDialog dialog = new JDialog(frame, "dialog");
+        dialog.setSize(300, 200);
+        JButton addBtn = new JButton("add");
+        JButton cancelBtn = new JButton("cancel");
         
-        users.add(new User());
+        JPanel dialogPaneTop = new JPanel();
+        JPanel dialogPaneBottom = new JPanel();
+        // add field panel
+        dialog.add(dialogPaneTop, BorderLayout.NORTH);
+        
+        GridLayout grid = new GridLayout(3,2);
+        dialogPaneTop.setLayout(grid);
+        
+        JTextField nameField = new JTextField("");
+        JTextField heightField = new JTextField("");
+        JTextField weightField = new JTextField("");
+        
+        dialogPaneTop.add(new JLabel("Name :"));
+        dialogPaneTop.add(nameField);
+        
+        dialogPaneTop.add(new JLabel("Height :"));
+        dialogPaneTop.add(heightField);
+        
+        dialogPaneTop.add(new JLabel("Weight :"));
+        dialogPaneTop.add(weightField);
+        
+        dialog.add(dialogPaneBottom, BorderLayout.SOUTH);
+        
+        dialogPaneBottom.add(cancelBtn);
+        dialogPaneBottom.add(addBtn);
+        dialog.setVisible(true);
+        addBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.setVisible(false);
+                // users.add(new User(NAME, HEIGHT, WEIGHT, DATE));
+            }
+        });
+        cancelBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.setVisible(false);
+            }
+        });
     }
     public void addUser(String NAME, double HEIGHT, double WEIGHT, String DATE){
         users.add(new User(NAME, HEIGHT, WEIGHT, DATE));
