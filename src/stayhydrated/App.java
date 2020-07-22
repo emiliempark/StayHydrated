@@ -18,13 +18,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.BoxLayout;
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import static stayhydrated.StayHydrated.frame;
 import static stayhydrated.StayHydrated.pUser;
+import static stayhydrated.StayHydrated.today;
 
 /**
  *
@@ -59,26 +62,22 @@ public class App {
         
         pUser.add(pUserColLeft, BorderLayout.LINE_START);
         
-        
-        
+        JComboBox usersComboBox = new JComboBox((ComboBoxModel) users);
+        usersComboBox.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object source = e.getSource();
+
+                System.out.println("test button clicked" + source);
+//                        System.out.println((i+1) +") "+ this.getUser(i).toString());
+            }
+        });
+        pUserColLeft.add(usersComboBox,BorderLayout.LINE_START);
+
         boolean terminate = false;
         
         while(!terminate){
-            
-            for(int i = 0; i < this.getNumOfUser(); i++ ){
-                
-                JButton userButton = new JButton(this.getUser(i).toString());
-                userButton.addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        Object source = e.getSource();
-                        
-                        System.out.println("test button clicked" + source);
-//                        System.out.println((i+1) +") "+ this.getUser(i).toString());
-                    }
-                });
-                pUserColLeft.add(userButton,BorderLayout.LINE_START);
-            }
+  
             
             int otherOption = this.getNumOfUser() + 1;
             
@@ -162,8 +161,10 @@ public class App {
         addBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                
+                users.add(new User(nameField.getText(), Double.parseDouble(heightField.getText()), Double.parseDouble(weightField.getText()), today));
+                System.out.println("add"); 
                 dialog.setVisible(false);
-                // users.add(new User(NAME, HEIGHT, WEIGHT, DATE));
             }
         });
         cancelBtn.addActionListener(new ActionListener(){
